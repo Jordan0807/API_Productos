@@ -1,43 +1,44 @@
-public class Producto
+namespace API_Productos.Models
 {
-    private decimal _precio;
-    private int _stock;
-
-    public int Id { get; set; }
-    public string Nombre { get; set; } = string.Empty;
-    public string Descripcion { get; set; } = string.Empty;
-    
-
-    public decimal Precio
+    public class Producto
     {
-        get { return _precio; }
-        set
+        private decimal _precio;
+        private int _stock;
+
+        public int Id { get; set; }
+        public string Nombre { get; set; } = string.Empty;
+        public string Descripcion { get; set; } = string.Empty;
+
+        public decimal Precio
         {
-            if (value < 0)
+            get { return _precio; }
+            set
             {
-                _precio = 0;
+                if (value < 0)
+                {
+                    _precio = 0;
+                }
+                else
+                {
+                    _precio = value;
+                }
             }
-            else
+        }
+
+        public int Stock
+        {
+            get { return _stock; }
+            set
             {
-                _precio = value;
+                if (value < 0)
+                {
+                    _stock = 0;
+                }
+                else
+                {
+                    _stock = value;
+                }
             }
         }
     }
-
-    public int Stock
-    {
-        get { return _stock; }
-        set
-        {
-            if (value < 0)
-            {
-                _stock = 0;
-            }
-            else
-            {
-                _stock = value;
-            }
-        }
-    }
-
 }
