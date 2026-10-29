@@ -1,5 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using API_Productos.Data;
+using API_Productos.Interfaces;
+using API_Productos.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("CadenaSQL"))
 );
 
+builder.Services.AddScoped<IProductoService, ProductoService>();
+
+// Configuración de GraphQL
+
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>();
+
+
 var app = builder.Build();
 
 // 4. Configurar el pipeline HTTP y habilitar Swagger en desarrollo
@@ -29,5 +40,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGraphQL();
 
 app.Run();

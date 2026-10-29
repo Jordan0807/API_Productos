@@ -53,7 +53,7 @@ namespace API_Productos.Controllers
         {
             if (id != producto.Id)
             {
-                return BadRequest(new { mensaje = "El ID del producto no coincide" });
+                return BadRequest(new { mensaje = "El ID del producto no coincide papu" });
             }
 
             _context.Entry(producto).State = EntityState.Modified;
