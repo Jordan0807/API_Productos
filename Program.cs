@@ -1,6 +1,7 @@
 using API_Productos.Data;
 using API_Productos.Interfaces;
 using API_Productos.Services;
+using API_Productos.GraphQL;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,8 +24,8 @@ builder.Services.AddScoped<IProductoService, ProductoService>();
 
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Query>();
-
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>();
 
 var app = builder.Build();
 
