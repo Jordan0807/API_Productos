@@ -2,6 +2,13 @@
 
 API REST de productos desarrollada con **ASP.NET Core (.NET 8)**, **Entity Framework Core (Code First)** y **SQLite**, con integración de **GraphQL** (HotChocolate) y documentación con **Swagger**. El proyecto aplica principios **SOLID**, **Clean Code** e **Inyección de Dependencias**.
 
+## Integrantes
+
+Jordan Benjamin
+Romero Lautaro
+Vera Ignacio
+Pouyte Luca
+Dominguez Facundo
 
 ---
 
@@ -23,9 +30,9 @@ API REST de productos desarrollada con **ASP.NET Core (.NET 8)**, **Entity Frame
 | Campo | Tipo | Regla |
 |---|---|---|
 | `Id` | int | Clave primaria, autoincremental |
-| `Nombre` | string | Obligatorio, máximo 100 caracteres |
-| `Descripcion` | string | Opcional, máximo 500 caracteres |
-| `Precio` | decimal | No puede ser negativo |
+| `Nombre` | string | Obligatorio |
+| `Descripcion` | string | Opcional |
+| `Precio` | decimal | Debe ser mayor a cero |
 | `Stock` | int | No puede ser negativo |
 
 ---
@@ -194,10 +201,7 @@ mutation {
 
 ```graphql
 mutation {
-  actualizarProducto(id: 1, input: { nombre: "Mouse", descripcion: "Gamer", precio: 18000, stock: 25 }) {
-    id
-    precio
-  }
+  actualizarProducto(id: 1, input: { nombre: "Mouse", descripcion: "Gamer", precio: 18000, stock: 25 })
 }
 ```
 
@@ -207,11 +211,13 @@ mutation {
 }
 ```
 
+`actualizarProducto` y `eliminarProducto` devuelven `true` si el producto existía y `false` si no.
+
 ---
 
 ## 7. Pruebas
 
-Las pruebas verifican las reglas principales del sistema sobre `ProductoService`, usando una base SQLite en memoria:
+Las pruebas verifican las reglas principales del sistema sobre `ProductoService`, usando una base de datos en memoria (EF Core InMemory):
 
 - Crear un producto y obtenerlo por ID.
 - Rechazar un precio negativo.
