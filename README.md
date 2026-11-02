@@ -4,11 +4,11 @@ API REST de productos desarrollada con **ASP.NET Core (.NET 8)**, **Entity Frame
 
 ## Integrantes
 
-Jordan Benjamin
-Romero Lautaro
-Vera Ignacio
-Pouyte Luca
-Dominguez Facundo
+- Jordan Benjamin
+- Romero Lautaro
+- Vera Ignacio
+- Pouyte Luca
+- Dominguez Facundo
 
 ---
 
@@ -77,12 +77,8 @@ REST y GraphQL comparten el **mismo servicio**, por lo que las reglas de negocio
 
 ### Requisitos previos
 
-- [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0) o superior
-- Herramienta de migraciones de EF Core:
-
-```bash
-dotnet tool install --global dotnet-ef
-```
+- Git
+- [.NET SDK](https://dotnet.microsoft.com/download) 8.0 o superior
 
 ### Pasos
 
@@ -93,23 +89,13 @@ git clone https://github.com/Jordan0807/API_Productos.git
 cd API_Productos
 ```
 
-2. Restaurar dependencias:
-
-```bash
-dotnet restore
-```
-
-3. Crear la base de datos aplicando las migraciones (genera el archivo `productos.db`):
-
-```bash
-dotnet ef database update
-```
-
-4. Ejecutar la aplicación:
+2. Ejecutar la aplicación:
 
 ```bash
 dotnet run --launch-profile https
 ```
+
+La base de datos (`productos.db`) se **crea sola** al iniciar la aplicación, aplicando las migraciones de EF Core. No hace falta ningún paso extra. Dejá la terminal abierta mientras uses la API: si la cerrás, la aplicación se detiene.
 
 ### Configuración
 
@@ -130,13 +116,13 @@ Para usar otra ubicación o archivo, modificar ese valor.
 | Swagger UI | https://localhost:7042/swagger |
 | GraphQL (IDE Banana Cake Pepper) | https://localhost:7042/graphql |
 
-Si el navegador muestra una advertencia por el certificado HTTPS de desarrollo, ejecutar una vez `dotnet dev-certs https --trust`. También se puede usar `http://localhost:5136` con el perfil `http`.
+Si el navegador muestra una advertencia por el certificado HTTPS de desarrollo, ejecutar una vez `dotnet dev-certs https --trust` y reiniciar la aplicación. También se puede usar `http://localhost:5136` con el perfil `http`.
 
 ---
 
 ## 5. API REST
 
-Documentada y probable desde **Swagger UI** (`/swagger`).
+Documentada y probada desde **Swagger UI** (`/swagger`).
 
 | Método | Ruta | Descripción | Respuestas |
 |---|---|---|---|
@@ -165,6 +151,8 @@ Si los datos no cumplen las reglas (por ejemplo, precio negativo o nombre vacío
 
 Endpoint: `/graphql`
 
+Se abre el editor Banana Cake Pepper: apretar **Crear documento**, pegar una operación y apretar **Run**. Conviene probar una operación por pestaña.
+
 **Consultas**
 
 ```graphql
@@ -187,6 +175,8 @@ query {
   }
 }
 ```
+
+Si el id no existe, `productoPorId` devuelve `null`.
 
 **Mutaciones**
 
@@ -217,7 +207,7 @@ mutation {
 
 ## 7. Pruebas
 
-Las pruebas verifican las reglas principales del sistema sobre `ProductoService`, usando una base de datos en memoria (EF Core InMemory):
+Las pruebas verifican las reglas principales del sistema sobre `ProductoService`, usando una base de datos en memoria (EF Core InMemory), por lo que no tocan `productos.db`:
 
 - Crear un producto y obtenerlo por ID.
 - Rechazar un precio negativo.
@@ -231,6 +221,8 @@ Ejecutar todas las pruebas:
 ```bash
 dotnet test
 ```
+
+Resultado esperado: **8 pruebas correctas y 0 con errores**.
 
 ---
 

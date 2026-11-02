@@ -7,7 +7,7 @@ namespace API_Productos.DTOs
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public string Nombre { get; set; } = string.Empty;
 
-        public string? Descripcion { get; set; } // Opcional o requerida según prefieras
+        public string? Descripcion { get; set; } 
 
         [Range(0.01, double.MaxValue, ErrorMessage = "El precio debe ser mayor a cero.")]
         public decimal Precio { get; set; }

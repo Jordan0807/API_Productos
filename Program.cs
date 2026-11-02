@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// 3. Registrar tu AppDbContext con SQLite usando la cadena de conexión
+// 3. Registrar AppDbContext con SQLite usando la cadena de conexión
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("CadenaSQL"))
 );
@@ -28,6 +28,13 @@ builder.Services
     .AddMutationType<Mutation>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
+
 
 // 4. Configurar el pipeline HTTP y habilitar Swagger en desarrollo
 if (app.Environment.IsDevelopment())
